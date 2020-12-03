@@ -35,13 +35,16 @@ module Fastlane
           )
         end
 
+        print_version = new_version || current_version
+        print_build = new_build || current_build
+
         UI.important "Current Version is:"
-        UI.message "  Version: #{new_version || current_version} #{"(was #{current_version})" if !new_version.nil? && new_version != current_version}"
-        UI.message "  Build: #{new_build || current_build} #{"(was #{current_build})" if !new_build.nil? && new_build != current_build}"
+        UI.message "  Version: #{print_version} #{"(was #{current_version})" if !new_version.nil? && new_version != current_version}"
+        UI.message "  Build: #{print_build} #{"(was #{current_build})" if !new_build.nil? && new_build != current_build}"
 
         {
-          version: new_version,
-          build: new_build
+          version: print_version,
+          build: print_build
         }
       end
 
@@ -57,7 +60,6 @@ module Fastlane
         end
 
         semver_version = Mixlib::Versioning.parse(current_version)
-
         increment = UI.input("How many new #{type_name} were added since last release?")
 
         if /\A\d+\Z/.match?(increment)
@@ -66,13 +68,8 @@ module Fastlane
           UI.user_error!("Not a valid integer!")
         end
 
-        puts "Increment: #{increment}"
-
         current_count = semver_version.instance_variable_get("@#{bump_type}")
-        puts "Current count: #{current_count}"
-
         semver_version.instance_variable_set("@#{bump_type}", current_count + increment)
-        puts "Semver: #{semver_version.to_semver_string}"
         semver_version.to_semver_string
       end
 

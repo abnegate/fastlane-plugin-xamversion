@@ -1,14 +1,14 @@
 PATH
   remote: ../ruby-csproj
   specs:
-    csproj (0.1.0)
+    csproj (0.1.1)
       nokogiri (~> 1.7)
 
 PATH
   remote: .
   specs:
-    fastlane-plugin-xamversion (0.1.1)
-      csproj (~> 0.1.0)
+    fastlane-plugin-xamversion (0.1.2)
+      csproj (~> 0.1.1)
       mixlib-versioning (~> 1.2)
       nokogiri (~> 1.7)
 
