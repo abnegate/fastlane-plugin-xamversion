@@ -1,6 +1,7 @@
-# xamversion plugin
+# Xamversion Fastlane Plugin
 
 [![fastlane Plugin Badge](https://rawcdn.githack.com/fastlane/fastlane/master/fastlane/assets/plugin-badge.svg)](https://rubygems.org/gems/fastlane-plugin-xamversion)
+[![Gem Version](https://badge.fury.io/rb/fastlane-plugin-xamversion.svg)](https://badge.fury.io/rb/fastlane-plugin-xamversion)
 
 ## Getting Started
 
@@ -12,27 +13,40 @@ fastlane add_plugin xamversion
 
 ## About xamversion
 
-Read and manipulate Android and iOS app versions.
-
-**Note to author:** Add a more detailed description about this plugin here. If your plugin contains multiple actions, make sure to mention them here.
+Fastlane plugin to easily read and manipulate Xamarin Android and iOS app version and build numbers.
 
 ## Example
 
 Check out the [example `Fastfile`](fastlane/Fastfile) to see how to use this plugin. Try it by cloning the repo, running `fastlane install_plugins` and `bundle exec fastlane test`.
 
-**Note to author:** Please set up a sample project to make it easy for users to explore what your plugin does. Provide everything that is necessary to try out the plugin in this project (including a sample Xcode/Android project if necessary)
-
-## Run tests for this plugin
-
-To run both the tests, and code style validation, run
-
-```
-rake
-```
-
-To automatically fix many of the styling issues, use
-```
-rubocop -a
+```ruby
+platform :ios do
+  desc "Just print the version and build"
+  lane :example do
+    xamversion
+  end
+  
+  desc "Set version and/or build explicitly"
+  lane :example do
+    xamversion(
+      version: "1.2.0",
+      build:   20
+    )
+  end
+  
+  desc "Interactively update the version following SemVer"
+  lane :example do
+    xamversion(bump: true)
+  end
+  
+  desc "If Info.plist or AndroidManifest.xml cannot be found"
+  lane :example do
+    xamversion(
+      plist_path: "path/to/Info.plist",
+      manifest_path: "path/to/AndroidManifest.xml"
+    )
+  end
+end
 ```
 
 ## Issues and Feedback
